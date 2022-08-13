@@ -1,5 +1,5 @@
 let db;
-const request = indexedDB.open('budget-tracker', 1);
+const request = indexedDB.open('budget_tracker', 1);
 
 request.onupgradeneeded = function (event) {
     const db = event.target.result;
@@ -19,15 +19,16 @@ request.onerror = function(event) {
 };
 
 function saveRecord(record) {
-    const trans = db.transaction(['new_transaction'], 'readwrite');
-    const transObjectStore = transaction.objectStore('new_transaction');
-    transObjectStore.add(record);
+    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transactionObjectStore = transaction.objectStore('new_transaction');
+    transactionObjectStore.add(record);
 }
 
 function uploadTransaction() {
-    const trans = db.transaction(['new_transaction'], 'readwrite');
-    const transObjectStore = transaction.objectStore('new_transaction');
-    const getAll = transObjectStore.getAll();
+    console.log('entered uploadTransaciton function');
+    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transactionObjectStore = transaction.objectStore('new_transaction');
+    const getAll = transactionObjectStore.getAll();
 
     getAll.onsuccess = function() {
         if (getAll.result.length > 0) {
@@ -45,9 +46,10 @@ function uploadTransaction() {
                         throw new Error(serverResponse);
                     }
 
-                    const trans = db.transaction(['new_transaction'], 'readwrite');
-                    const transObjectStore = transaction.objectStore('new_transaction');
-                    transObjectStore.clear();
+                    const transaction = db.transaction(['new_transaction'], 'readwrite');
+                    const transactionObjectStore = transaction.objectStore('new_transaction');
+                    transactionObjectStore.clear();
+                    console.log("Cached transactions successfully saved!")
                 })
                 .catch(err => {
                     console.log(err);

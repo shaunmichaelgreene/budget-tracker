@@ -132,15 +132,18 @@ function sendTransaction(isAdding) {
       // clear form
       nameEl.value = "";
       amountEl.value = "";
+      alert("Transaction logged successfully!")
     }
   })
   .catch(err => {
     // fetch failed, so save in indexed db
     saveRecord(transaction);
+    console.log('no connection, transaction cached')
 
     // clear form
     nameEl.value = "";
     amountEl.value = "";
+    alert("Transaction logged successfully!")
   });
 }
 
